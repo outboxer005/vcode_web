@@ -24,7 +24,7 @@ export function TimelineDemo() {
 
   const data = [
     {
-      title: "Typing Test • Registration Open",
+      title: "Typing Test",
       content: (
         <div>
           <p className="text-white/80 text-xl md:text-xl font-normal mb-4">
