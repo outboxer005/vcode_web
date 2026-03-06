@@ -25,7 +25,8 @@ import posterPresentationImg from "@/assets/Poster Presentation.png";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const eventDetails: Record<string, any> = {
   "Typing Test": {
-    Description: "Test your typing speed and accuracy.",
+    Description:
+      " Participants attempt multiple 60-second typing tests within 10 minutes, and the highest WPM achieved is considered as the final score",
     Rounds: "2",
     Venue: "To be announced shortly",
     Payment: "Mandatory",
@@ -39,7 +40,8 @@ const eventDetails: Record<string, any> = {
     Payment: "Mandatory",
   },
   "Debugging & Defend": {
-    Description: "Find out the errors and resolve them!",
+    Description:
+      "Participants fix bugs in given HTML, CSS, and JavaScript files to make the project work as per the required features",
     "Team Size": "3 Members",
     Rounds: "2",
     Venue: "To be announced shortly",
@@ -54,7 +56,8 @@ const eventDetails: Record<string, any> = {
     Payment: "Mandatory",
   },
   "Technical Quiz": {
-    Description: "Test knowledge, challenge intellect, excel!",
+    Description:
+      "A concept-based quiz covering OS, DBMS, OOPS, Algorithms, and Programming.",
     "Team Size": "4",
     Levels: "2",
     Venue: "To be announced shortly",
@@ -81,7 +84,8 @@ const eventDetails: Record<string, any> = {
     Payment: "Mandatory",
   },
   "Code Hunt": {
-    Description: "Solve, Discover, Code, Conquer!",
+    Description:
+      "Participants follow clue-based paths and solve logical challenges to reach the final answer",
     "Team Size": "4",
     Levels: "6-7",
     Venue: "To be announced shortly",
@@ -118,7 +122,7 @@ const eventConfig = [
     description: "Given an image, recreate it using AI tools. Accuracy wins.",
     img: promptMasterImg,
     url: "/register/promptmaster",
-    registrationOpen: false,
+    registrationOpen: true,
   },
   {
     area: "md:[grid-area:2/9/3/13] xl:[grid-area:2/9/3/13]",
@@ -129,7 +133,7 @@ const eventConfig = [
       "Fix bugs in HTML, CSS & JS. Make the project work as specified.",
     img: debuggingDefendImg,
     url: "/register/debugging",
-    registrationOpen: false,
+    registrationOpen: true,
   },
   {
     area: "md:[grid-area:3/1/4/5] xl:[grid-area:3/1/4/5]",
@@ -139,7 +143,7 @@ const eventConfig = [
     description: "MCQs on OS, DBMS, OOPs, Algorithms & Programming. Team of 4.",
     img: technicalQuizImg,
     url: "/register/quiz",
-    registrationOpen: false,
+    registrationOpen: true,
   },
   {
     area: "md:[grid-area:3/5/4/9] xl:[grid-area:3/5/4/9]",
@@ -150,7 +154,7 @@ const eventConfig = [
       "Solve problems in C, C++, Python, Java, or JS. Year-wise individuals.",
     img: codingContestImg,
     url: "/register/coding",
-    registrationOpen: false,
+    registrationOpen: true,
   },
   {
     area: "md:[grid-area:3/9/4/13] xl:[grid-area:3/9/4/13]",
@@ -160,7 +164,7 @@ const eventConfig = [
     description:
       "Design a technical poster that clearly communicates your idea or solution.",
     img: posterPresentationImg,
-    url: "/events",
+    url: "/register/poster",
     registrationOpen: false,
   },
   {
@@ -171,7 +175,7 @@ const eventConfig = [
     description: "Follow clues, crack levels. VCODE Day morning—team of 4.",
     img: codeHuntImg,
     url: "/register/codehunt",
-    registrationOpen: false,
+    registrationOpen: true,
   },
 ];
 

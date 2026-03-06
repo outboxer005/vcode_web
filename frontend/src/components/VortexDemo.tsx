@@ -56,9 +56,9 @@ export function VortexDemo() {
         transition={{ delay: 1, duration: 0.5 }}
         className="flex justify-center mt-6 sm:mt-10"
       >
-        <p className="text-base sm:text-xl md:text-2xl font-bold text-white/95 text-center px-4 md:px-16 lg:px-32 leading-relaxed max-w-3xl">
-          Participate, enhance your skills, and earn certificates to add value
-          to your work and life.
+        <p className="text-base sm:text-xl md:text-2xl font-bold text-white/95 text-center px-4 md:px-16 lg:px-32 leading-relaxed max-w-6xl mx-auto">
+          Join us to contribute, enhance your programming and development
+          expertise, participate in exciting activities, and earn certificates.
         </p>
       </motion.div>
     </div>

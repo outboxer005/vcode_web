@@ -38,8 +38,8 @@ export default function Events() {
           className="text-white/70 mt-4 max-w-3xl mx-auto text-lg leading-relaxed"
         >
           Eight thrilling events. Compete, collaborate, and showcase your
-          technical skills. Register now and join the biggest technical
-          celebration of the year!
+          technical skills. Register now and join the technical celebration of
+          the year!
         </motion.p>
       </div>
       <div className="max-w-7xl mx-auto px-2">
