@@ -37,7 +37,6 @@ const DynamicRegister = () => {
   if (key === "quiz") return wrap("Technical Quiz", <QuizForm />);
   if (key === "coding") return wrap("Coding Contest", <CodingForm />);
   if (key === "codehunt") return wrap("Code Hunt", <CodeHuntForm />);
-  if (key === "promptmaster") return wrap("Prompt Master", <PromptMasterForm />);
   if (key === "debugging") return wrap("Debugging & Defend", <DebuggingForm />);
 
   const eventName = EVENT_LABELS[key] || event;

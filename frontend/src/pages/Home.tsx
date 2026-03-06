@@ -31,18 +31,18 @@ const featuredEvents = [
     description: "Test your typing speed and accuracy.",
     image: typingTestImg,
     icon: Type,
-    registerUrl: "/register/typingtest",
+    registerUrl: "/events",
     registrationOpen: true,
   },
   {
     title: "Prompt Master",
     label: "AI Challenge",
-    date: "Open now",
+    date: "Coming Soon",
     description: "Given an image, recreate it using AI tools. Accuracy wins.",
     image: promptMasterImg,
     icon: ImageIcon,
-    registerUrl: "/register/promptmaster",
-    registrationOpen: true,
+    registerUrl: "/events",
+    registrationOpen: false,
   },
   {
     title: "Debugging & Defend",
@@ -51,7 +51,7 @@ const featuredEvents = [
     description: "Fix bugs in HTML, CSS & JS. Make the project work as specified.",
     image: debuggingDefendImg,
     icon: Bug,
-    registerUrl: "/register/debugging",
+    registerUrl: "/events",
     registrationOpen: true,
   },
   {
@@ -62,7 +62,7 @@ const featuredEvents = [
       "Solve problems in C, C++, Python, Java, or JS. Year-wise individuals.",
     image: codingContestImg,
     icon: Code,
-    registerUrl: "/register/coding",
+    registerUrl: "/events",
     registrationOpen: true,
   },
   {
@@ -72,7 +72,7 @@ const featuredEvents = [
     description: "MCQs on OS, DBMS, OOPs, Algorithms & Programming. Team of 4.",
     image: technicalQuizImg,
     icon: BookOpen,
-    registerUrl: "/register/quiz",
+    registerUrl: "/events",
     registrationOpen: true,
   },
   {
@@ -82,7 +82,7 @@ const featuredEvents = [
     description: "Innovate, collaborate, create groundbreaking solutions!",
     image: hackathonImg,
     icon: Cpu,
-    registerUrl: "/register/hackathon",
+    registerUrl: "/events",
     registrationOpen: false,
   },
   {
@@ -92,7 +92,7 @@ const featuredEvents = [
     description: "Follow clues, crack levels. VCODE Day morning—team of 4.",
     image: codeHuntImg,
     icon: Search,
-    registerUrl: "/register/codehunt",
+    registerUrl: "/events",
     registrationOpen: true,
   },
   {
@@ -102,7 +102,7 @@ const featuredEvents = [
     description: "Design a technical poster that clearly communicates your idea or solution.",
     image: posterPresentationImg,
     icon: ImageIcon,
-    registerUrl: "/register/poster",
+    registerUrl: "/events",
     registrationOpen: false,
   },
 ];

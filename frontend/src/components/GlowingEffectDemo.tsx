@@ -122,7 +122,7 @@ const eventConfig = [
     description: "Given an image, recreate it using AI tools. Accuracy wins.",
     img: promptMasterImg,
     url: "/register/promptmaster",
-    registrationOpen: true,
+    registrationOpen: false,
   },
   {
     area: "md:[grid-area:2/9/3/13] xl:[grid-area:2/9/3/13]",

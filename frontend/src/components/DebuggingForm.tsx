@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import {
+    DEBUGGING_FORM_SUBMIT_URL,
+    DEBUGGING_FORM_ENTRIES,
+} from "@/config/googleForms";
 
 // ─── Shared constants ────────────────────────────────────────────────────────
 const YEARS = ["2", "3"];
@@ -16,17 +18,17 @@ const selectCls =
     "w-full h-10 rounded-md border border-white/10 bg-[var(--muted)] px-3 py-2 text-sm text-white focus:ring-2 focus:ring-[#06b6d4] focus:outline-none";
 const inputCls = "bg-[var(--muted)] border-white/10";
 
-type Participant = {
+type Member = {
     name: string;
+    regno: string;
     email: string;
-    registrationNo: string;
-    phoneNo: string;
+    mobile: string;
     year: string;
     section: string;
 };
 
-const emptyMember = (): Participant => ({
-    name: "", email: "", registrationNo: "", phoneNo: "", year: "", section: "",
+const emptyMember = (): Member => ({
+    name: "", regno: "", email: "", mobile: "", year: "", section: "",
 });
 
 const MEMBER_COLORS = [
@@ -36,21 +38,21 @@ const MEMBER_COLORS = [
 ];
 
 export default function DebuggingForm() {
-    const [formData, setFormData] = useState<Participant[]>([
+    const [formData, setFormData] = useState<Member[]>([
         emptyMember(), emptyMember(), emptyMember(),
     ]);
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
     const handleChange = (
-        index: number,
+        idx: number,
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     ) => {
         const { name, value } = e.target;
         setFormData((prev) => {
             const updated = [...prev];
-            updated[index] = {
-                ...updated[index],
+            updated[idx] = {
+                ...updated[idx],
                 [name]: value,
                 ...(name === "year" ? { section: "" } : {}),
             };
@@ -58,34 +60,65 @@ export default function DebuggingForm() {
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (submitting) return;
+        setSubmitting(true);
 
-        for (const m of formData) {
-            if (!m.name || !m.email || !m.registrationNo || !m.phoneNo || !m.year || !m.section) {
-                toast.error("All fields are required for every member.");
-                return;
-            }
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = DEBUGGING_FORM_SUBMIT_URL;
+        form.target = "google-form-iframe-debugging";
+        form.style.display = "none";
+
+        const entries: [string, string][] = [
+            [DEBUGGING_FORM_ENTRIES.member1Name, formData[0].name],
+            [DEBUGGING_FORM_ENTRIES.regno1, formData[0].regno],
+            [DEBUGGING_FORM_ENTRIES.email1, formData[0].email],
+            [DEBUGGING_FORM_ENTRIES.mobile1, formData[0].mobile],
+            [DEBUGGING_FORM_ENTRIES.year1, formData[0].year],
+            [DEBUGGING_FORM_ENTRIES.section1, formData[0].section],
+            [DEBUGGING_FORM_ENTRIES.member2Name, formData[1].name],
+            [DEBUGGING_FORM_ENTRIES.regno2, formData[1].regno],
+            [DEBUGGING_FORM_ENTRIES.email2, formData[1].email],
+            [DEBUGGING_FORM_ENTRIES.mobile2, formData[1].mobile],
+            [DEBUGGING_FORM_ENTRIES.year2, formData[1].year],
+            [DEBUGGING_FORM_ENTRIES.section2, formData[1].section],
+            [DEBUGGING_FORM_ENTRIES.member3Name, formData[2].name],
+            [DEBUGGING_FORM_ENTRIES.regno3, formData[2].regno],
+            [DEBUGGING_FORM_ENTRIES.email3, formData[2].email],
+            [DEBUGGING_FORM_ENTRIES.mobile3, formData[2].mobile],
+            [DEBUGGING_FORM_ENTRIES.year3, formData[2].year],
+            [DEBUGGING_FORM_ENTRIES.section3, formData[2].section],
+        ];
+
+        entries.forEach(([name, value]) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+
+        let iframe = document.getElementById("google-form-iframe-debugging") as HTMLIFrameElement;
+        if (!iframe) {
+            iframe = document.createElement("iframe");
+            iframe.id = "google-form-iframe-debugging";
+            iframe.name = "google-form-iframe-debugging";
+            iframe.style.display = "none";
+            document.body.appendChild(iframe);
         }
 
-        setSubmitting(true);
-        try {
-            await axios.post("https://vcode-m6ni.onrender.com/api/register", {
-                eventName: "Debugging & Defend",
-                participants: formData,
-            });
+        form.submit();
+        form.remove();
+
+        setTimeout(() => {
+            setSubmitting(false);
             setSubmitted(true);
             setFormData([emptyMember(), emptyMember(), emptyMember()]);
-        } catch (error) {
-            if (axios.isAxiosError(error) && error.response) {
-                toast.error("Registration failed: " + error.response.data.error);
-            } else {
-                toast.error("An unexpected error occurred. Please try again.");
-            }
-        } finally {
-            setSubmitting(false);
-        }
+        }, 1500);
     };
 
     // ── Success screen ────────────────────────────────────────────────────────
@@ -99,8 +132,7 @@ export default function DebuggingForm() {
                 </div>
                 <h3 className="text-xl font-semibold text-white mb-2">Registration submitted</h3>
                 <p className="text-white/60 text-sm">
-                    Your team has been registered for Debugging &amp; Defend. We will
-                    share further information soon.
+                    Your team has been registered for Debugging &amp; Defend. We will share further information soon.
                 </p>
             </div>
         );
@@ -109,7 +141,6 @@ export default function DebuggingForm() {
     // ── Form ──────────────────────────────────────────────────────────────────
     return (
         <div className="rounded-2xl border border-white/10 bg-[var(--card)] p-6 md:p-8 max-w-2xl w-full">
-            <Toaster position="top-right" />
             <h3 className="text-xl font-semibold text-white mb-6">
                 Debugging &amp; Defend — Registration (Team of 3)
             </h3>
@@ -122,11 +153,11 @@ export default function DebuggingForm() {
                         </p>
 
                         <div className="space-y-2">
-                            <Label htmlFor={`registrationNo-${idx}`} className="text-white/80">Registration Number</Label>
+                            <Label htmlFor={`regno-${idx}`} className="text-white/80">Registration Number</Label>
                             <Input
-                                id={`registrationNo-${idx}`} name="registrationNo" type="text"
+                                id={`regno-${idx}`} name="regno" type="text"
                                 placeholder="Enter full registration number"
-                                value={member.registrationNo} onChange={(e) => handleChange(idx, e)}
+                                value={member.regno} onChange={(e) => handleChange(idx, e)}
                                 required className={inputCls}
                             />
                         </div>
@@ -152,11 +183,11 @@ export default function DebuggingForm() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor={`phoneNo-${idx}`} className="text-white/80">Phone</Label>
+                            <Label htmlFor={`mobile-${idx}`} className="text-white/80">Phone</Label>
                             <Input
-                                id={`phoneNo-${idx}`} name="phoneNo" type="tel"
+                                id={`mobile-${idx}`} name="mobile" type="tel"
                                 placeholder="10-digit mobile number"
-                                value={member.phoneNo} onChange={(e) => handleChange(idx, e)}
+                                value={member.mobile} onChange={(e) => handleChange(idx, e)}
                                 required className={inputCls}
                             />
                         </div>
@@ -200,6 +231,13 @@ export default function DebuggingForm() {
                     {submitting ? "Submitting…" : "Submit Registration"}
                 </button>
             </form>
+
+            <iframe
+                id="google-form-iframe-debugging"
+                name="google-form-iframe-debugging"
+                title="Form submission"
+                className="hidden"
+            />
         </div>
     );
 }

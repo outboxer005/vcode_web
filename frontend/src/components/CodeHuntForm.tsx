@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import {
+  CODE_HUNT_FORM_SUBMIT_URL,
+  CODE_HUNT_FORM_ENTRIES,
+} from "@/config/googleForms";
 
 // ─── Shared constants ────────────────────────────────────────────────────────
 const YEARS = ["2", "3"];
@@ -60,34 +62,71 @@ export default function CodeHuntForm() {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
+    setSubmitting(true);
 
-    for (const m of formData) {
-      if (!m.name || !m.email || !m.registrationNo || !m.phoneNo || !m.year || !m.section) {
-        toast.error("All fields are required for every member.");
-        return;
-      }
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = CODE_HUNT_FORM_SUBMIT_URL;
+    form.target = "google-form-iframe-codehunt";
+    form.style.display = "none";
+
+    const entries: [string, string][] = [
+      [CODE_HUNT_FORM_ENTRIES.member1Name, formData[0].name],
+      [CODE_HUNT_FORM_ENTRIES.regno1, formData[0].registrationNo],
+      [CODE_HUNT_FORM_ENTRIES.email1, formData[0].email],
+      [CODE_HUNT_FORM_ENTRIES.mobile1, formData[0].phoneNo],
+      [CODE_HUNT_FORM_ENTRIES.year1, formData[0].year],
+      [CODE_HUNT_FORM_ENTRIES.section1, formData[0].section],
+      [CODE_HUNT_FORM_ENTRIES.member2Name, formData[1].name],
+      [CODE_HUNT_FORM_ENTRIES.regno2, formData[1].registrationNo],
+      [CODE_HUNT_FORM_ENTRIES.email2, formData[1].email],
+      [CODE_HUNT_FORM_ENTRIES.mobile2, formData[1].phoneNo],
+      [CODE_HUNT_FORM_ENTRIES.year2, formData[1].year],
+      [CODE_HUNT_FORM_ENTRIES.section2, formData[1].section],
+      [CODE_HUNT_FORM_ENTRIES.member3Name, formData[2].name],
+      [CODE_HUNT_FORM_ENTRIES.regno3, formData[2].registrationNo],
+      [CODE_HUNT_FORM_ENTRIES.email3, formData[2].email],
+      [CODE_HUNT_FORM_ENTRIES.mobile3, formData[2].phoneNo],
+      [CODE_HUNT_FORM_ENTRIES.year3, formData[2].year],
+      [CODE_HUNT_FORM_ENTRIES.section3, formData[2].section],
+      [CODE_HUNT_FORM_ENTRIES.member4Name, formData[3].name],
+      [CODE_HUNT_FORM_ENTRIES.regno4, formData[3].registrationNo],
+      [CODE_HUNT_FORM_ENTRIES.email4, formData[3].email],
+      [CODE_HUNT_FORM_ENTRIES.mobile4, formData[3].phoneNo],
+      [CODE_HUNT_FORM_ENTRIES.year4, formData[3].year],
+      [CODE_HUNT_FORM_ENTRIES.section4, formData[3].section],
+    ];
+
+    entries.forEach(([name, value]) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    let iframe = document.getElementById("google-form-iframe-codehunt") as HTMLIFrameElement;
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = "google-form-iframe-codehunt";
+      iframe.name = "google-form-iframe-codehunt";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
     }
 
-    setSubmitting(true);
-    try {
-      await axios.post("https://vcode-m6ni.onrender.com/api/register", {
-        eventName: "Code Hunt",
-        participants: formData,
-      });
+    form.submit();
+    form.remove();
+
+    setTimeout(() => {
+      setSubmitting(false);
       setSubmitted(true);
       setFormData([emptyMember(), emptyMember(), emptyMember(), emptyMember()]);
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        toast.error("Registration failed: " + error.response.data.error);
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
-    } finally {
-      setSubmitting(false);
-    }
+    }, 1500);
   };
 
   // ── Success screen ────────────────────────────────────────────────────────
@@ -111,7 +150,6 @@ export default function CodeHuntForm() {
   // ── Form ──────────────────────────────────────────────────────────────────
   return (
     <div className="rounded-2xl border border-white/10 bg-[var(--card)] p-6 md:p-8 max-w-2xl w-full">
-      <Toaster position="top-right" />
       <h3 className="text-xl font-semibold text-white mb-6">
         Code Hunt — Registration (Team of 4)
       </h3>
@@ -202,6 +240,13 @@ export default function CodeHuntForm() {
           {submitting ? "Submitting…" : "Submit Registration"}
         </button>
       </form>
+
+      <iframe
+        id="google-form-iframe-codehunt"
+        name="google-form-iframe-codehunt"
+        title="Form submission"
+        className="hidden"
+      />
     </div>
   );
 }

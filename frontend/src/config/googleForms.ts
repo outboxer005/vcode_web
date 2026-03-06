@@ -1,4 +1,64 @@
 /**
+ * Debugging & Defend Google Form configuration
+ */
+export const DEBUGGING_FORM_SUBMIT_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSea0JvRs_S7Pro3krEb9_IOvdC6mk_l69MhFbzqRA4H1AvXeQ/formResponse";
+
+export const DEBUGGING_FORM_ENTRIES = {
+  member1Name: "entry.118147828",
+  regno1: "entry.1946971121",
+  email1: "entry.373381375",
+  mobile1: "entry.1986927716",
+  year1: "entry.134734037",
+  section1: "entry.879840264",
+  member2Name: "entry.109092656",
+  regno2: "entry.202560722",
+  email2: "entry.1888213613",
+  mobile2: "entry.448344595",
+  year2: "entry.984386208",
+  section2: "entry.516174737",
+  member3Name: "entry.1003593596",
+  regno3: "entry.445940735",
+  email3: "entry.684201959",
+  mobile3: "entry.566125213",
+  year3: "entry.273730245",
+  section3: "entry.224749384",
+} as const;
+
+/**
+ * Code Hunt Google Form configuration
+ */
+export const CODE_HUNT_FORM_SUBMIT_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSc9y0LnmjC2MQWj3cJwyYlRMicU8EQYJf4OWtFDMVtdJQOwIg/formResponse";
+
+export const CODE_HUNT_FORM_ENTRIES = {
+  member1Name: "entry.823797018",
+  regno1: "entry.646615959",
+  email1: "entry.595810653",
+  mobile1: "entry.1143723946",
+  year1: "entry.1764757786",
+  section1: "entry.1139628140",
+  member2Name: "entry.490302841",
+  regno2: "entry.1595187398",
+  email2: "entry.1812949764",
+  mobile2: "entry.940326146",
+  year2: "entry.2073986191",
+  section2: "entry.636005069",
+  member3Name: "entry.1457268848",
+  regno3: "entry.674682031",
+  email3: "entry.418463944",
+  mobile3: "entry.86100749",
+  year3: "entry.342164880",
+  section3: "entry.1585014941",
+  member4Name: "entry.1635391229",
+  regno4: "entry.1651997207",
+  email4: "entry.1922084739",
+  mobile4: "entry.285278981",
+  year4: "entry.1695786273",
+  section4: "entry.1873681923",
+} as const;
+
+/**
  * Coding Contest Google Form configuration
  */
 export const CODING_CONTEST_FORM_SUBMIT_URL =
